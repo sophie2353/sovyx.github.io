@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>SOVYX</title>
+  <style>
+    body {
+      background-color: #FFFFFF;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Título SOVYX -->
+  <h1 style="color:#98FFDC; text-align:center; font-size:48px; margin-top:40px;">SOVYX</h1>
+  <p style="color:#98FFDC; text-align:center; font-size:18px;">
+    Cápsula editorial predictiva. Corrige, documenta y muta.
+  </p>
+
+  <!-- Sección de activación -->
+  <div style="background-color:#6A0DAD; padding:30px; margin:40px auto; width:80%; border-radius:12px;">
+    <h2 style="color:#98FFDC; text-align:center;">Activa tu cápsula</h2>
+    
+    <label style="color:#98FFDC;">Instagram:</label><br>
+    <input type="text" placeholder="@usuario" style="width:100%; padding:12px; margin-bottom:20px; border:none; border-radius:6px;"><br>
+
+    <label style="color:#98FFDC;">Correo:</label><br>
+    <input type="email" placeholder="tucorreo@ejemplo.com" style="width:100%; padding:12px; margin-bottom:20px; border:none; border-radius:6px;"><br>
+
+    <button style="background-color:#98FFDC; color:#6A0DAD; padding:12px 24px; border:none; border-radius:6px; font-weight:bold;">
+      Activar cápsula
+    </button>
+  </div>
+
+  <!-- Sección de corrección -->
+  <div style="background-color:#FFFFFF; border:2px solid #6A0DAD; padding:30px; margin:40px auto; width:80%; border-radius:12px;">
+    <h2 style="color:#98FFDC;">Corrección inicial</h2>
+    <p style="color:#98FFDC;">
+      Si es tu primera vez, esta cápsula corregirá tu entrada emocional-financiera.  
+      Cada dato que ingreses será documentado como mutación viva.
+    </p>
+  </div>
+
+  <!-- Registro inicial -->
+  <section id="registro">
+    <h2>Acceso simbólico</h2>
+    <form id="registroForm">
+      <input type="text" name="usuario" placeholder="Tu nombre o alias" required />
+      <input type="email" name="correo" placeholder="Correo electrónico" required />
+      <button type="submit">Activar</button>
+      <a href="https://www.facebook.com/v18.0/dialog/oauth?client_id=TU_APP_ID&redirect_uri=TU_REDIRECT_URI&scope=instagram_basic,instagram_manage_insights,pages_read_engagement">Activar cápsula editorial</a>
+    </form>
+  </section>
+
+  <!-- Formulario predictivo -->
+  <section id="formulario" style="display:none;">
+    <h2>Análisis, Corrección y Simulación</h2>
+    <form id="capsulaForm">
+      <input type="text" name="product" placeholder="Producto" required />
+      <input type="number" name="price" placeholder="Precio" required />
+      <input type="text" name="niche" placeholder="Nicho" required />
+      <input type="text" name="audience" placeholder="Audiencia" required />
+      <input type="number" name="goal" placeholder="Meta ($)" required />
+      <input type="number" name="days" placeholder="Tiempo (días)" required />
+      <button type="submit">Activar</button>
+    </form>
+  </section>
+
+  <!-- Corrección predictiva -->
+  <section id="respuesta" style="display:none;"></section>
+
+  <!-- Fundamentos ocultos -->
+  <div class="oculto" id="fundamentos">
+    Emocionalmente inevitable, Financieramente simulable, Documentado en tiempo real, Corrige antes del fallo, Multiplica sin perder esencia, Activa sin vender, Escala sin comunidad, Visualmente icónico, Narrativamente inevitable, Validación pública, Corrección predictiva, Simulación de ingresos.
+  </div>
+
+  <script>
+    // Detección de usuario
+    const nombreUsuario = localStorage.getItem('sovyx_user');
+    if (nombreUsuario) {
+      document.getElementById('registro').style.display = 'none';
+      document.getElementById('formulario').style.display = 'block';
+      document.getElementById('capsulaForm').style.display = 'block';
+    }
+
+    // Registro
+    document.getElementById('registroForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const nombre = form.usuario.value;
+      localStorage.setItem('sovyx_user', nombre);
+      document.getElementById('registro').style.display = 'none';
+      document.getElementById('formulario').style.display = 'block';
+      document.getElementById('capsulaForm').style.display = 'block';
+    });
+
+    // Activación cápsula
+    document.getElementById('capsulaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        product: form.product.value,
+        price: parseFloat(form.price.value),
+        niche: form.niche.value,
+        audience: form.audience.value,
+        goal: parseFloat(form.goal.value),
+        days: parseInt(form.days.value)
+      };
+
+      if (data.price < 1000) {
+        alert("Tu producto está por debajo del rango high ticket (€1.000+). ¿Quieres activar una cápsula de corrección para escalar tu oferta?");
+        return;
+      }
+
+      const cierreNecesario = Math.ceil(data.goal / data.price);
+      const cierrePorDia = Math.ceil(cierreNecesario / data.days);
+
+      fetch('https://sovyx-predictiva-sophie10fra.replit.app/activate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        const nombre = localStorage.getItem('sovyx_user');
+        const niche = data.niche.toLowerCase();
+        if (niche.includes("odontología")) {
+          response.caption = "¿Tus pacientes no confían en tu marca? Este reel corrige eso.";
+        }
+        if (niche.includes("fitness")) {
+          response.caption = "¿Tu comunidad no paga lo que vale tu transformación? Este carrusel lo corrige.";
+        }
+        if (niche.includes("tech") || niche.includes("tecnología")) {
+          response.caption = "¿Tu software no cierra clientes high ticket? Este post activa autoridad editorial.";
+        }
+
+        document.getElementById('respuesta').style.display = 'block';
+        document.getElementById('respuesta').innerHTML = `
+          <h2>Corrección Predictiva</h2>
+          <p><strong>Usuario:</strong> ${nombre}</p>
+          <p><strong>Cluster:</strong> ${response.cluster}</p>
+          <p><strong>Caption:</strong> ${response.caption}</p>
+          <p><strong>Formato:</strong> ${response.estructura.formato}</p>
+          <p><strong>CTA:</strong> ${response.estructura.CTA}</p>
+          <p><strong>Cierre necesario:</strong> ${cierreNecesario} clientes</p>
+          <p><strong>Cierre diario estimado:</strong> ${cierrePorDia} clientes/día</p>
+        `;
+      })
+      .catch(error => {
+        document.getElementById('respuesta').innerText = 'Error al activar la cápsula.';
+        console.error(error);
+      });
+    });
+  </script>
+
+</body>
+</html>
