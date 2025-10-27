@@ -8,41 +8,76 @@
       background-color: #FFFFFF;
       font-family: Arial, sans-serif;
     }
+    h1, h2, p {
+      color: #98FFDC;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #98FFDC;
+      color: #6A0DAD;
+      font-weight: bold;
+    }
+    .seccion {
+      margin: 40px auto;
+      width: 80%;
+      padding: 30px;
+      border-radius: 12px;
+    }
+    .activacion {
+      background-color: #6A0DAD;
+    }
+    .correccion {
+      border: 2px solid #6A0DAD;
+    }
   </style>
 </head>
 <body>
 
-  <h1 style="color:#98FFDC; text-align:center; font-size:48px; margin-top:40px;">SOVYX</h1>
-  <p style="color:#98FFDC; text-align:center; font-size:18px;">
-    Cápsula editorial predictiva. Corrige, documenta y muta.
-  </p>
+  <h1 style="font-size:48px; margin-top:40px;">SOVYX</h1>
+  <p style="font-size:18px;">Cápsula editorial predictiva. Corrige, documenta y muta.</p>
 
-  <!-- Registro inicial -->
-  <section id="registro">
+  <!-- Activación Meta -->
+  <div class="seccion activacion">
+    <h2>Activa tu cápsula editorial</h2>
+    <p>Este enlace activa los permisos <strong>instagram_basic</strong> y <strong>instagram_manage_insights</strong>:</p>
+    <a href="https://www.facebook.com/v18.0/dialog/oauth?client_id=TU_APP_ID&redirect_uri=https://sophie2353.github.io/sovyx.github.io/&scope=instagram_basic,instagram_manage_insights,pages_read_engagement" target="_blank" style="color:#FFFFFF; font-weight:bold;">
+      Activar vía Facebook
+    </a>
+  </div>
+
+  <!-- Registro -->
+  <section id="registro" class="seccion correccion">
     <h2>Acceso simbólico</h2>
     <form id="registroForm">
       <input type="text" name="usuario" placeholder="Tu nombre o alias" required />
       <input type="email" name="correo" placeholder="Correo electrónico" required />
-      <button type="submit">Activar</button>
+      <button type="submit">Ingresar</button>
     </form>
   </section>
 
   <!-- Formulario predictivo -->
-  <section id="formulario" style="display:none;">
+  <section id="formulario" class="seccion activacion" style="display:none;">
     <h2>Análisis, Corrección y Simulación</h2>
     <form id="capsulaForm">
       <input type="text" name="product" placeholder="Producto" required />
-      <input type="number" name="price" placeholder="Precio" required />
+      <input type="number" name="price" placeholder="Precio (€)" required />
       <input type="text" name="niche" placeholder="Nicho" required />
       <input type="text" name="audience" placeholder="Audiencia" required />
-      <input type="number" name="goal" placeholder="Meta ($)" required />
+      <input type="number" name="goal" placeholder="Meta (€)" required />
       <input type="number" name="days" placeholder="Tiempo (días)" required />
-      <button type="submit">Activar</button>
+      <button type="submit">Activar cápsula</button>
     </form>
   </section>
 
-  <!-- Corrección predictiva -->
-  <section id="respuesta" style="display:none;"></section>
+  <!-- Resultado -->
+  <section id="respuesta" class="seccion correccion" style="display:none;"></section>
 
   <script>
     // Detección de usuario
@@ -50,7 +85,6 @@
     if (nombreUsuario) {
       document.getElementById('registro').style.display = 'none';
       document.getElementById('formulario').style.display = 'block';
-      document.getElementById('capsulaForm').style.display = 'block';
     }
 
     // Registro
@@ -61,10 +95,9 @@
       localStorage.setItem('sovyx_user', nombre);
       document.getElementById('registro').style.display = 'none';
       document.getElementById('formulario').style.display = 'block';
-      document.getElementById('capsulaForm').style.display = 'block';
     });
 
-    // Activación cápsula (simulada sin fetch)
+    // Activación cápsula (simulada)
     document.getElementById('capsulaForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const form = e.target;
@@ -86,7 +119,6 @@
       const cierrePorDia = Math.ceil(cierreNecesario / data.days);
       const nombre = localStorage.getItem('sovyx_user');
 
-      // Simulación de respuesta
       let caption = "Este post activa autoridad editorial.";
       const niche = data.niche.toLowerCase();
       if (niche.includes("odontología")) {
