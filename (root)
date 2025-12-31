@@ -2,147 +2,200 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>SOVYX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOVYX Web</title>
   <style>
+    :root {
+      --purple: #6a0dad;   /* púrpura elegante */
+      --mint: #3eb489;     /* verde menta */
+      --white: #ffffff;
+      --dark-bg: #1a1a1a;  /* fondo oscuro para contraste */
+    }
+
     body {
-      background-color: #FFFFFF;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--dark-bg);
+      color: var(--white);
+      line-height: 1.6;
     }
-    h1, h2, p {
-      color: #98FFDC;
-      text-align: center;
+
+    section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(255,255,255,0.05); /* semi-transparente para elegancia */
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease;
     }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
+
+    section:hover {
+      transform: translateY(-3px);
+    }
+
+    h1, h2 {
+      color: var(--mint);
+      margin-top: 0;
+      font-weight: 600;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin-top: 10px;
+      background: var(--purple);
+      color: var(--white);
       border: none;
       border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
-    button {
-      background-color: #98FFDC;
-      color: #6A0DAD;
-      font-weight: bold;
+
+    button:hover {
+      background: var(--mint);
+      color: var(--dark-bg);
+      transform: scale(1.02);
     }
-    .seccion {
-      margin: 40px auto;
-      width: 80%;
-      padding: 30px;
-      border-radius: 12px;
+
+    input {
+      padding: 10px;
+      width: 100%;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 2px solid var(--mint);
+      border-radius: 6px;
+      background: var(--dark-bg);
+      color: var(--white);
     }
-    .activacion {
-      background-color: #6A0DAD;
+
+    div {
+      margin-top: 10px;
+      color: var(--mint);
+      font-weight: 500;
     }
-    .correccion {
-      border: 2px solid #6A0DAD;
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      body {
+        max-width: 800px;
+        margin: auto;
+      }
+      button, input {
+        width: auto;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1 style="font-size:48px; margin-top:40px;">SOVYX</h1>
-  <p style="font-size:18px;">Cápsula editorial predictiva. Corrige, documenta y muta.</p>
+<!-- Inicio -->
+<section id="inicio">
+  <h1>Bienvenida a SOVYX</h1>
+  <p>Backend activo, sesión iniciada automáticamente 🌝</p>
+</section>
 
-  <!-- Activación Meta -->
-  <div class="seccion activacion">
-    <h2>Activa tu cápsula editorial</h2>
-    <p>Este enlace activa los permisos <strong>instagram_basic</strong> y <strong>instagram_manage_insights</strong>:</p>
-    <a href="https://www.facebook.com/v18.0/dialog/oauth?client_id=TU_APP_ID&redirect_uri=https://sophie2353.github.io/sovyx.github.io/&scope=instagram_basic,instagram_manage_insights,pages_read_engagement" target="_blank" style="color:#FFFFFF; font-weight:bold;">
-      Activar vía Facebook
-    </a>
-  </div>
+<!-- Audiencia + Delivery -->
+<section id="audiencia">
+  <h2>Construcción de Audiencia</h2>
+  <label>Tamaño de audiencia:</label><br>
+  <input type="number" id="audienceSize" value="100000"><br>
+  <button onclick="buildAudience()">Construir Audiencia</button>
+  <div id="audienceResult"></div>
 
-  <!-- Registro -->
-  <section id="registro" class="seccion correccion">
-    <h2>Acceso simbólico</h2>
-    <form id="registroForm">
-      <input type="text" name="usuario" placeholder="Tu nombre o alias" required />
-      <input type="email" name="correo" placeholder="Correo electrónico" required />
-      <button type="submit">Ingresar</button>
-    </form>
-  </section>
+  <h3>Asignar Delivery</h3>
+  <button onclick="assignDelivery()">Asignar Delivery</button>
+  <div id="deliveryResult"></div>
+</section>
 
-  <!-- Formulario predictivo -->
-  <section id="formulario" class="seccion activacion" style="display:none;">
-    <h2>Análisis, Corrección y Simulación</h2>
-    <form id="capsulaForm">
-      <input type="text" name="product" placeholder="Producto" required />
-      <input type="number" name="price" placeholder="Precio (€)" required />
-      <input type="text" name="niche" placeholder="Nicho" required />
-      <input type="text" name="audience" placeholder="Audiencia" required />
-      <input type="number" name="goal" placeholder="Meta (€)" required />
-      <input type="number" name="days" placeholder="Tiempo (días)" required />
-      <button type="submit">Activar cápsula</button>
-    </form>
-  </section>
+<!-- Publicar -->
+<section id="publicar">
+  <h2>Publicar en Instagram</h2>
+  <label>Caption:</label><br>
+  <input type="text" id="caption" value="Hola desde SOVYX 🚀"><br>
+  <label>Imagen (URL):</label><br>
+  <input type="text" id="mediaUrl" value="https://picsum.photos/600"><br>
+  <button onclick="publishPost()">Publicar</button>
+  <div id="publishResult"></div>
+</section>
 
-  <!-- Resultado -->
-  <section id="respuesta" class="seccion correccion" style="display:none;"></section>
+<!-- Estadísticas -->
+<section id="estadisticas">
+  <h2>Estadísticas</h2>
+  <button onclick="getInsights()">Ver Insights</button>
+  <div id="insightsResult"></div>
+</section>
 
-  <script>
-    // Detección de usuario
-    const nombreUsuario = localStorage.getItem('sovyx_user');
-    if (nombreUsuario) {
-      document.getElementById('registro').style.display = 'none';
-      document.getElementById('formulario').style.display = 'block';
-    }
+<!-- Análisis -->
+<section id="analisis">
+  <h2>Análisis de Contenido</h2>
+  <label>Texto para analizar:</label><br>
+  <input type="text" id="analysisText" value="Ejemplo de caption para análisis"><br>
+  <button onclick="analyzeContent()">Analizar</button>
+  <div id="analysisResult"></div>
+</section>
 
-    // Registro
-    document.getElementById('registroForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const nombre = form.usuario.value;
-      localStorage.setItem('sovyx_user', nombre);
-      document.getElementById('registro').style.display = 'none';
-      document.getElementById('formulario').style.display = 'block';
-    });
+<script>
+const BASE_URL = "https://sovyxbackend-production.up.onrailway.app/api";
 
-    // Activación cápsula (simulada)
-    document.getElementById('capsulaForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        product: form.product.value,
-        price: parseFloat(form.price.value),
-        niche: form.niche.value,
-        audience: form.audience.value,
-        goal: parseFloat(form.goal.value),
-        days: parseInt(form.days.value)
-      };
+async function buildAudience() {
+  const size = document.getElementById("audienceSize").value;
+  const response = await fetch(`${BASE_URL}/audience/build`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ session_id: "gh_session", constraints: { size: size } })
+  });
+  const data = await response.json();
+  document.getElementById("audienceResult").innerHTML =
+    `<p>Audiencia creada: ${data.size} personas (ID: ${data.id})</p>`;
+}
 
-      if (data.price < 1000) {
-        alert("Tu producto está por debajo del rango high ticket (€1.000+). ¿Quieres activar una cápsula de corrección para escalar tu oferta?");
-        return;
-      }
+async function assignDelivery() {
+  const response = await fetch(`${BASE_URL}/delivery/assign`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ session_id: "gh_session", audience_id: "aud_123456", delivery_window: "24h" })
+  });
+  const data = await response.json();
+  document.getElementById("deliveryResult").innerHTML =
+    `<p>Entrega asignada: ${data.reach} personas en 24h</p>`;
+}
 
-      const cierreNecesario = Math.ceil(data.goal / data.price);
-      const cierrePorDia = Math.ceil(cierreNecesario / data.days);
-      const nombre = localStorage.getItem('sovyx_user');
+async function publishPost() {
+  const caption = document.getElementById("caption").value;
+  const mediaUrl = document.getElementById("mediaUrl").value;
+  const response = await fetch(`${BASE_URL}/instagram/publish`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ caption: caption, media_url: mediaUrl })
+  });
+  const data = await response.json();
+  document.getElementById("publishResult").innerHTML =
+    `<p>Post publicado con ID: ${data.id}</p>`;
+}
 
-      let caption = "Este post activa autoridad editorial.";
-      const niche = data.niche.toLowerCase();
-      if (niche.includes("odontología")) {
-        caption = "¿Tus pacientes no confían en tu marca? Este reel corrige eso.";
-      }
-      if (niche.includes("fitness")) {
-        caption = "¿Tu comunidad no paga lo que vale tu transformación? Este carrusel lo corrige.";
-      }
-      if (niche.includes("tech") || niche.includes("tecnología")) {
-        caption = "¿Tu software no cierra clientes high ticket? Este post activa autoridad editorial.";
-      }
+async function getInsights() {
+  const response = await fetch(`${BASE_URL}/instagram/insights/17895695668004550`, {
+    method: "GET"
+  });
+  const data = await response.json();
+  document.getElementById("insightsResult").innerHTML =
+    `<p>Alcance: ${data.reach} | Likes: ${data.likes}</p>`;
+}
 
-      document.getElementById('respuesta').style.display = 'block';
-      document.getElementById('respuesta').innerHTML = `
-        <h2>Corrección Predictiva</h2>
-        <p><strong>Usuario:</strong> ${nombre}</p>
-        <p><strong>Producto:</strong> ${data.product}</p>
-        <p><strong>Nicho:</strong> ${data.niche}</p>
-        <p><strong>Caption:</strong> ${caption}</p>
-        <p><strong>Cierre necesario:</strong> ${cierreNecesario} clientes</p>
-        <p><strong>Cierre diario estimado:</strong> ${cierrePorDia} clientes/día</p>
-      `;
-    });
-  </script>
+async function analyzeContent() {
+  const text = document.getElementById("analysisText").value;
+  const response = await fetch(`${BASE_URL}/content/analyze`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: text })
+  });
+  const data = await response.json();
+  document.getElementById("analysisResult").innerHTML =
+    `<p>Score de calidad: ${data.quality_score}</p>`;
+}
+</script>
 
 </body>
 </html>
